@@ -2,10 +2,9 @@
 
 namespace app\database\activerecord;
 
-use app\database\interfaces\ActiveRecordInterface;
-use app\database\interfaces\UpdateInterface;
-use Attribute;
 use ReflectionClass;
+use app\database\interfaces\ActiveRecordInterface;
+use app\database\interfaces\ActiveRecordExecuteInterface;
 
 //Não é possível instanciar essa classe em lugar nenhum, pois ela é abstrata
 abstract class Activerecord implements ActiveRecordInterface
@@ -41,31 +40,16 @@ abstract class Activerecord implements ActiveRecordInterface
         $this->attributes[$attribute] = $value;
     }
 
+    //Vai ser usado para ler e obter os $attributes, __get é usado para ler dados protegidos ou privados
     public function __get($attribute)
     {
         return $this->attributes[$attribute];
     }
 
-    //Função para chamar o método que vai fazer o Update, ele executa a função update que vai ser responsável por chamar o update específico
-    public function update(UpdateInterface $updateInterface)
+    //Função para chamar o método que vai fazer o executar todas as interfaces da interface principal
+    public function execute(ActiveRecordExecuteInterface $activeRecordExecuteInterface)
     {
-        // var_dump($this);
-        // $this dentro da função é a instancia do próprio objeto
-        return $updateInterface->update($this);
+        return $activeRecordExecuteInterface->execute($this);
     }
-    // public function insert(){
 
-    // }
-    // public function delete(){
-
-    // }
-    // public function find(){
-
-    // }
-    // public function findBy(){
-
-    // }
-    // public function all(){
-
-    // }
 }
