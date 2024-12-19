@@ -7,7 +7,7 @@ use app\database\interfaces\ActiveRecordInterface;
 use app\database\interfaces\ActiveRecordExecuteInterface;
 
 //Não é possível instanciar essa classe em lugar nenhum, pois ela é abstrata
-abstract class Activerecord implements ActiveRecordInterface
+abstract class ActiveRecord implements ActiveRecordInterface
 {
     //tabela que será enviada de dentro das classes dos Models
     protected $table = null;
@@ -20,6 +20,7 @@ abstract class Activerecord implements ActiveRecordInterface
     {
         if (!$this->table) {
             //O "$this" dentro de ReflectionClass, faz referência a classe User
+            //Pega o nome da classe e coloca como nome da tabela, caso ela não esteja sendo puxada de lugar nenhum
             $this->table = strtolower((new ReflectionClass($this))->getShortName());
         }
     }

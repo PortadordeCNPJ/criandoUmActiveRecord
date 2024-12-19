@@ -16,7 +16,7 @@ class Connection
         try {
             //Verifica se a conexão não foi estática e caso não seja ele transforma ela e atribui as informações de conexão
             if (!static::$pdo) {
-                static::$pdo = new PDO("mysql:host=localhost;dbname=activerecord","root","", [
+                static::$pdo = new PDO("mysql:host=localhost;dbname=cursoactiverecord","root","", [
 
                     //Quando ocorre algum erro, ele mostra eles como exceção, mostrando o erro que está ocorrendo
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

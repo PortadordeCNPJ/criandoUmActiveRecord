@@ -9,8 +9,7 @@ use app\database\activerecord\Update;
 
 $user = new User;
 $user->firstName = 'Guilherme';
-$user->lastName = 'De Souza Muller';
-$user->id = 1;
+$user->lastName = 'de Souza Muller';
 
-echo $user->execute(new Find);
+$user->execute(new Update(field:"id", value:1));
 
