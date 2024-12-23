@@ -3,13 +3,12 @@
 require "../vendor/autoload.php";
 
 use app\database\models\User;
-use app\database\activerecord\Find;
-use app\database\activerecord\Insert;
-use app\database\activerecord\Update;
+use app\database\activerecord\Delete;
+
 
 $user = new User;
-$user->firstName = 'Guilherme';
-$user->lastName = 'de Souza Muller';
+// $user->firstName = 'Guilherme';
+// $user->lastName = 'De Souza Muller';
 
-$user->execute(new Update(field:"id", value:1));
+echo $user->execute(new Delete(field:'id', value:3));
 

@@ -10,7 +10,7 @@ class Update implements ActiveRecordExecuteInterface
 {
 
     //Deixa os atributos $field e $value privados, para serem utilizados panas dentro da função
-    public function __construct(private string $field, private string $value) {}
+    public function __construct(private string $field, private string|int $value) {}
 
     //Função retorna os atributos para dentro de um array, para a variável $attributes que depois é executada dentro da função "createQuery", que faz o Update 
     public function execute(ActiveRecordInterface $activeRecordInterface)

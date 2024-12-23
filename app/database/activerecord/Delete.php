@@ -2,12 +2,16 @@
 
 namespace app\database\activerecord;
 
+use Exception;
 use app\database\connection\Connection;
 use app\database\interfaces\ActiveRecordInterface;
 use app\database\interfaces\ActiveRecordExecuteInterface;
 
-class Insert implements ActiveRecordExecuteInterface
+class Delete implements ActiveRecordExecuteInterface
 {
+
+    public function __construct(private string $field, private string|int $value) {}
+
     public function execute(ActiveRecordInterface $activeRecordInterface)
     {
         try {
@@ -16,8 +20,11 @@ class Insert implements ActiveRecordExecuteInterface
             $connection = Connection::connect();
 
             $prepare = $connection->prepare($query);
-            return $prepare->execute($activeRecordInterface->getAttributes());
+            $prepare->execute([
+                $this->field => $this->value
+            ]);
 
+            return $prepare->rowCount();
         } catch (\Throwable $throw) {
             formatExcetion($throw);
         }
@@ -25,9 +32,13 @@ class Insert implements ActiveRecordExecuteInterface
 
     private function createQuery(ActiveRecordInterface $activeRecordInterface)
     {
-        $sql = "insert into {$activeRecordInterface->getTable()}(";
-        $sql .= implode(',', array_keys($activeRecordInterface->getAttributes())) . ') values(:';
-        $sql .= implode(',:', array_keys($activeRecordInterface->getAttributes())) . ')';
+        if ($activeRecordInterface->getAttributes()) {
+            throw new Exception("Para deletar não precisa passar atributos");
+        }
+
+        $sql = "delete from {$activeRecordInterface->getTable()}";
+        $sql .= " where {$this->field} = :{$this->field}";
+
         return $sql;
     }
 }
