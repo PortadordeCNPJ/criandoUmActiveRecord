@@ -3,12 +3,10 @@
 require "../vendor/autoload.php";
 
 use app\database\models\User;
-use app\database\activerecord\Delete;
-
+use app\database\activerecord\FindAll;
 
 $user = new User;
 // $user->firstName = 'Guilherme';
 // $user->lastName = 'De Souza Muller';
 
-echo $user->execute(new Delete(field:'id', value:3));
-
+var_dump($user->execute(new FindAll(fields:"lastName")));
